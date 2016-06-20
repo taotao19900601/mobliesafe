@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:mt="http://schemas.android.com/apk/res/com.mt.mobliesafe"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        style="@style/TitleStyle"
+        android:text="设置中心" />
+    
+	<com.mt.mobliesafe.view.SettingItemView
+	    android:id="@+id/siv_update"
+	    android:layout_width="match_parent"
+    	android:layout_height="wrap_content"
+    	mt:titles="自动更新"
+    	mt:desc_on="自动更新已开启"
+    	mt:desc_off="自动更新已关闭"
+	    />
+	
+</LinearLayout>
