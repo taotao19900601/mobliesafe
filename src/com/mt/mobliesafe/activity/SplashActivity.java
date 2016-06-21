@@ -34,6 +34,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -90,6 +92,7 @@ public class SplashActivity extends Activity{
 		};
 	};
 	private SharedPreferences mSp;
+	private RelativeLayout relativeLayout;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -98,6 +101,8 @@ public class SplashActivity extends Activity{
 		
 		tvVersion = (TextView) findViewById(R.id.tv_version);
 		tvProgress = (TextView) findViewById(R.id.tv_progress);
+		
+		relativeLayout = (RelativeLayout) findViewById(R.id.rl_splash);
 		tvVersion.setText("版本號："+getVersionName());
 		
 		mSp = getSharedPreferences("config", MODE_PRIVATE);
@@ -109,6 +114,10 @@ public class SplashActivity extends Activity{
 		else{  
 			mHandler.sendEmptyMessageDelayed(CODE_ENTRY_HOME, 2000);// 发送延迟消息 2000
 		}
+		
+		AlphaAnimation alphaAnimation = new AlphaAnimation(0.6f, 1.0f);
+		alphaAnimation.setDuration(2000);
+		relativeLayout.setAnimation(alphaAnimation);
 		
 		
 	}

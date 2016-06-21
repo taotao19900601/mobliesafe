@@ -8,6 +8,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.mt.mobliesafe.MainActivity" 
     android:background="@drawable/launcher_bg"
+    android:id="@+id/rl_splash"
     >
     
     <TextView
