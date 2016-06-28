@@ -15,19 +15,29 @@ import com.mt.mobliesafe.R;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 
-public class Setup1Activity extends Activity {
+public class Setup4Activity extends Activity {
+	private SharedPreferences mSp;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_setup1);
+		setContentView(R.layout.activity_setup4);
 
 	}
 
 	public void next(View v) {
-		Intent intent = new Intent(this,Setup2Activity.class);
+		mSp = getSharedPreferences("config", MODE_PRIVATE);
+		mSp.edit().putBoolean("configed", true).commit();
+		finish();
+		
+	}
+	
+	public void previous(View v){
+		Intent intent = new Intent(this,Setup3Activity.class);
 		startActivity(intent);
 		finish();
 	}

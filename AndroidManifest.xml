@@ -28,6 +28,9 @@
    		<activity android:name="com.mt.mobliesafe.activity.SettingActivity"></activity>
    		<activity android:name="com.mt.mobliesafe.activity.LostFindActivity"></activity>
    		<activity android:name="com.mt.mobliesafe.activity.Setup1Activity"></activity>
+   		<activity android:name="com.mt.mobliesafe.activity.Setup2Activity"></activity>
+   		<activity android:name="com.mt.mobliesafe.activity.Setup3Activity"></activity>
+   		<activity android:name="com.mt.mobliesafe.activity.Setup4Activity"></activity>
    		
         </application>
 

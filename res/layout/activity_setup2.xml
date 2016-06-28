@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:mt="http://schemas.android.com/apk/res/com.mt.mobliesafe"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        style="@style/TitleStyle"
+        android:text="2.手机卡绑定" />
+
+  <TextView
+        style="@style/ContentStyle"
+        android:text="通过手机卡绑定" />
+   <TextView
+        style="@style/ContentStyle"
+        android:text="下次重启手机发现sim卡发生变化 " />
+   <TextView
+        style="@style/ContentStyle"
+        android:text="发送报警短信 " />
+   
+   	<com.mt.mobliesafe.view.SettingItemView
+	    android:id="@+id/siv_update"
+	    android:layout_width="match_parent"
+    	android:layout_height="wrap_content"
+    	mt:titles="点击绑定sim卡"
+    	mt:desc_on="sim已经绑定"
+    	mt:desc_off="sim没有绑定"
+	    />
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@android:drawable/presence_invisible" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@android:drawable/presence_online" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@android:drawable/presence_invisible" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@android:drawable/presence_invisible" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@drawable/bind" />
+		<Button 
+		    android:text="上一步"
+		    android:background="@drawable/btn_green_selector"
+		    style="@style/PreviousStyle"
+		    />
+        
+        <Button
+            style="@style/NextStyle"
+            android:background="@drawable/btn_green_selector"
+            android:text="下一步" />
+    </RelativeLayout>
+
+</LinearLayout>

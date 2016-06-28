@@ -1,5 +1,4 @@
 package com.mt.mobliesafe.activity;
-
 /**
  * .9path
  *  四条横线的说明
@@ -18,17 +17,24 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-public class Setup1Activity extends Activity {
+public class Setup2Activity extends Activity{
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_setup1);
-
+		setContentView(R.layout.activity_setup2);
+		
 	}
-
-	public void next(View v) {
-		Intent intent = new Intent(this,Setup2Activity.class);
+	
+	public void next(View v){
+		Intent intent = new Intent(this,Setup3Activity.class);
 		startActivity(intent);
 		finish();
 	}
+	
+	public void previous(View v){
+		Intent intent = new Intent(this,Setup1Activity.class);
+		startActivity(intent);
+		finish();
+	}
+	
 }
