@@ -62,31 +62,23 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@android:drawable/presence_invisible" />
-        
-        
     </LinearLayout>
-    
-    <RelativeLayout 
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        
-        >
-        <ImageView 
+        android:layout_weight="1" >
+
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/setup1"
             android:layout_centerInParent="true"
-            />
-        <Button 
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="下一步"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:paddingRight="10dp"
-            android:paddingBottom="10dp"
-            />
+            android:src="@drawable/setup1" />
+
+        <Button
+            style="@style/NextStyle"
+            android:background="@drawable/btn_green_selector"
+            android:text="下一步" />
     </RelativeLayout>
 
 </LinearLayout>
