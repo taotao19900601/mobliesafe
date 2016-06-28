@@ -106,6 +106,8 @@ public class HomeActivity extends Activity {
 								.putString("password",
 										MD5Utils.encode(password)).commit();
 						dialog.dismiss();
+						Intent intent = new Intent(HomeActivity.this, LostFindActivity.class);
+						startActivity(intent);
 					} else {
 						Toast.makeText(HomeActivity.this, "两次密码不一致！", 1).show();
 					}
@@ -145,6 +147,8 @@ public class HomeActivity extends Activity {
 					if (MD5Utils.encode(password).equals(savedPassword)) {
 						Toast.makeText(HomeActivity.this, "登录成功！", 1).show();
 						dialog.dismiss();
+						Intent intent = new Intent(HomeActivity.this, LostFindActivity.class);
+						startActivity(intent);
 					} else {
 						Toast.makeText(HomeActivity.this, "登录失败！", 1).show();
 					}
