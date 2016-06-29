@@ -18,7 +18,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-public class Setup3Activity extends Activity {
+public class Setup3Activity extends BaseSetupActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -26,17 +26,20 @@ public class Setup3Activity extends Activity {
 
 	}
 
-	public void next(View v) {
+	@Override
+	public void showPreviousPage() {
+		Intent intent = new Intent(this, Setup2Activity.class);
+		startActivity(intent);
+		overridePendingTransition(R.anim.tran_previous_in,
+				R.anim.tran_previous_out);
+		finish();
+	}
+
+	@Override
+	public void showNextPage() {
 		Intent intent = new Intent(this, Setup4Activity.class);
 		startActivity(intent);
 		finish();
 		overridePendingTransition(R.anim.tran_in, R.anim.tran_out);
-	}
-
-	public void previous(View v) {
-		Intent intent = new Intent(this, Setup2Activity.class);
-		startActivity(intent);
-		overridePendingTransition(R.anim.tran_previous_in, R.anim.tran_previous_out);
-		finish();
 	}
 }

@@ -17,8 +17,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.BaseAdapter;
 
-public class Setup1Activity extends Activity {
+public class Setup1Activity extends BaseSetupActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -26,7 +27,13 @@ public class Setup1Activity extends Activity {
 
 	}
 
-	public void next(View v) {
+	@Override
+	public void showPreviousPage() {
+
+	}
+
+	@Override
+	public void showNextPage() {
 		Intent intent = new Intent(this, Setup2Activity.class);
 		startActivity(intent);
 		finish();

@@ -19,8 +19,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 
-public class Setup4Activity extends Activity {
-	private SharedPreferences mSp;
+public class Setup4Activity extends BaseSetupActivity {
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -30,17 +30,28 @@ public class Setup4Activity extends Activity {
 	}
 
 	public void next(View v) {
-		mSp = getSharedPreferences("config", MODE_PRIVATE);
+		// sp对象调用的是 基类 baseSetupActivity的mSp 对象
 		mSp.edit().putBoolean("configed", true).commit();
+		Intent intent = new Intent(this,LostFindActivity.class);
+		startActivity(intent);
 		finish();
 		overridePendingTransition(R.anim.tran_in, R.anim.tran_out);
 
 	}
 
-	public void previous(View v) {
+	@Override
+	public void showPreviousPage() {
+
 		Intent intent = new Intent(this, Setup3Activity.class);
 		startActivity(intent);
-		overridePendingTransition(R.anim.tran_previous_in, R.anim.tran_previous_out);
+		overridePendingTransition(R.anim.tran_previous_in,
+				R.anim.tran_previous_out);
 		finish();
+
+	}
+
+	@Override
+	public void showNextPage() {
+
 	}
 }
