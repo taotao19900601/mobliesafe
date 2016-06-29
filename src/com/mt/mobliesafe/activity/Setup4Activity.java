@@ -33,12 +33,14 @@ public class Setup4Activity extends Activity {
 		mSp = getSharedPreferences("config", MODE_PRIVATE);
 		mSp.edit().putBoolean("configed", true).commit();
 		finish();
-		
+		overridePendingTransition(R.anim.tran_in, R.anim.tran_out);
+
 	}
-	
-	public void previous(View v){
-		Intent intent = new Intent(this,Setup3Activity.class);
+
+	public void previous(View v) {
+		Intent intent = new Intent(this, Setup3Activity.class);
 		startActivity(intent);
+		overridePendingTransition(R.anim.tran_previous_in, R.anim.tran_previous_out);
 		finish();
 	}
 }
