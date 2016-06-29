@@ -20,7 +20,7 @@
         android:text="发送报警短信 " />
    
    	<com.mt.mobliesafe.view.SettingItemView
-	    android:id="@+id/siv_update"
+	    android:id="@+id/siv_sim"
 	    android:layout_width="match_parent"
     	android:layout_height="wrap_content"
     	mt:titles="点击绑定sim卡"

@@ -21,7 +21,7 @@ public class SettingActivity extends Activity {
 		
 		sivUpdate = (SettingItemView) findViewById(R.id.siv_update);
 //		sivUpdate.setTitle("更新设置");
-		boolean autoUpdate = mPref.getBoolean("auto", true);
+		boolean autoUpdate = mPref.getBoolean("auto_update", true);
 		
 		if(autoUpdate){
 //			sivUpdate.setDesc("自动更新已开启");
