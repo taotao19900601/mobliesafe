@@ -17,13 +17,16 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 
 public class Setup3Activity extends BaseSetupActivity {
+	private EditText etPhone;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_setup3);
-
+		etPhone = (EditText) findViewById(R.id.et_phone);
 	}
 
 	@Override
@@ -41,5 +44,18 @@ public class Setup3Activity extends BaseSetupActivity {
 		startActivity(intent);
 		finish();
 		overridePendingTransition(R.anim.tran_in, R.anim.tran_out);
+	}
+
+	public void selectContast(View view) {
+		Intent intent = new Intent(this, ContastActivity.class);
+		startActivityForResult(intent, 0);
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		String phone = data.getStringExtra("phone");
+		phone = phone.replaceAll("-", "").replaceAll(" ", "");
+		etPhone.setText(phone);
 	}
 }

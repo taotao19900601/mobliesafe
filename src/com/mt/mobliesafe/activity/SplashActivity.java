@@ -64,24 +64,27 @@ public class SplashActivity extends Activity {
 			switch (msg.what) {
 
 			case CODE_UPDATE_DIALOG:
-				Toast.makeText(SplashActivity.this, "CODE_UPDATE_DIALOG", Toast.LENGTH_LONG).show();
+				Toast.makeText(SplashActivity.this, "新版本更新",
+						Toast.LENGTH_LONG).show();
 				showUpdateDailog();
 
 				break;
 
 			case CODE_URL_ERROR:
-				Toast.makeText(SplashActivity.this, "url错误", Toast.LENGTH_LONG).show();
+				Toast.makeText(SplashActivity.this, "url错误", Toast.LENGTH_LONG)
+						.show();
 				enterHome();
 				break;
 
 			case CODE_NET_ERROR:
-				// Toast.makeText(SplashActivity.this, "net错误",
-				// Toast.LENGTH_LONG).show();
+				Toast.makeText(SplashActivity.this, "net错误", Toast.LENGTH_LONG)
+						.show();
 				enterHome();
 				break;
 
 			case CODE_JSON_ERROR:
-				Toast.makeText(SplashActivity.this, "json错误", Toast.LENGTH_LONG).show();
+				Toast.makeText(SplashActivity.this, "json错误", Toast.LENGTH_LONG)
+						.show();
 				enterHome();
 				break;
 			case CODE_ENTRY_HOME:
@@ -104,7 +107,7 @@ public class SplashActivity extends Activity {
 		tvProgress = (TextView) findViewById(R.id.tv_progress);
 
 		relativeLayout = (RelativeLayout) findViewById(R.id.rl_splash);
-		tvVersion.setText("版本號：" + getVersionName());
+		tvVersion.setText("版本号：" + getVersionName());
 
 		mSp = getSharedPreferences("config", MODE_PRIVATE);
 		boolean autoUpdate = mSp.getBoolean("auto_update", true);
@@ -125,10 +128,12 @@ public class SplashActivity extends Activity {
 	private String getVersionName() {
 		PackageManager packageManager = getPackageManager();
 		try {
-			PackageInfo packageInfo = packageManager.getPackageInfo(getPackageName(), 0);
+			PackageInfo packageInfo = packageManager.getPackageInfo(
+					getPackageName(), 0);
 			int versionCode = packageInfo.versionCode;
 			versionName = packageInfo.versionName;
-			System.out.println("versioncode:" + versionCode + " versionName:" + versionName);
+			System.out.println("versioncode:" + versionCode + " versionName:"
+					+ versionName);
 
 		} catch (NameNotFoundException e) {
 			e.printStackTrace();
@@ -140,7 +145,8 @@ public class SplashActivity extends Activity {
 	private int getVersionCode() {
 		PackageManager packageManager = getPackageManager();
 		try {
-			PackageInfo packageInfo = packageManager.getPackageInfo(getPackageName(), 0);
+			PackageInfo packageInfo = packageManager.getPackageInfo(
+					getPackageName(), 0);
 			int versionCode = packageInfo.versionCode;
 			return versionCode;
 		} catch (NameNotFoundException e) {
@@ -158,7 +164,8 @@ public class SplashActivity extends Activity {
 			public void run() {
 				try {
 					// 模拟器访问ip为 10.0.0.2
-					URL url = new URL("http://192.168.40.103:8080/ms/update.json");
+					URL url = new URL(
+							"http://192.168.40.103:8080/ms/update.json");
 					conn = (HttpURLConnection) url.openConnection();
 					conn.setRequestMethod("GET");
 					conn.setConnectTimeout(5000);
@@ -262,39 +269,47 @@ public class SplashActivity extends Activity {
 	// 下载apk
 	protected void downLoad() {
 		// 下载到sd卡 先判断是否有sd
-		if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-			final String target = Environment.getExternalStorageDirectory() + "/update.apk";
+		if (Environment.getExternalStorageState().equals(
+				Environment.MEDIA_MOUNTED)) {
+			final String target = Environment.getExternalStorageDirectory()
+					+ "/update.apk";
 			HttpUtils httpUtils = new HttpUtils();
-			httpUtils.download(mDownloadUrl, target, new RequestCallBack<File>() {
+			httpUtils.download(mDownloadUrl, target,
+					new RequestCallBack<File>() {
 
-				// 文件的下载进度
-				@Override
-				public void onLoading(long total, long current, boolean isUploading) {
-					super.onLoading(total, current, isUploading);
-					tvProgress.setVisibility(View.VISIBLE);
-					tvProgress.setText("下载进度：" + current * 100 / total + "%");
-					Log.i("TAG", "apk大小为：" + total + "当前：" + current);
-				}
+						// 文件的下载进度
+						@Override
+						public void onLoading(long total, long current,
+								boolean isUploading) {
+							super.onLoading(total, current, isUploading);
+							tvProgress.setVisibility(View.VISIBLE);
+							tvProgress.setText("下载进度：" + current * 100 / total
+									+ "%");
+							Log.i("TAG", "apk大小为：" + total + "当前：" + current);
+						}
 
-				// 下载成功回调
-				@Override
-				public void onSuccess(ResponseInfo<File> arg0) {
-					Log.i("TAG", "下载成功！");
-					Intent intent = new Intent(Intent.ACTION_VIEW);
-					intent.addCategory(Intent.CATEGORY_DEFAULT);
-					intent.setDataAndType(Uri.fromFile(arg0.result), "application/vnd.android.package-archive");
-					startActivity(intent); // 下载成功后 跳转系统安装界面
-				}
+						// 下载成功回调
+						@Override
+						public void onSuccess(ResponseInfo<File> arg0) {
+							Log.i("TAG", "下载成功！");
+							Intent intent = new Intent(Intent.ACTION_VIEW);
+							intent.addCategory(Intent.CATEGORY_DEFAULT);
+							intent.setDataAndType(Uri.fromFile(arg0.result),
+									"application/vnd.android.package-archive");
+							startActivity(intent); // 下载成功后 跳转系统安装界面
+						}
 
-				// 下载失败回调
-				@Override
-				public void onFailure(HttpException arg0, String arg1) {
-					Toast.makeText(SplashActivity.this, "下载失败", Toast.LENGTH_LONG).show();
-				}
+						// 下载失败回调
+						@Override
+						public void onFailure(HttpException arg0, String arg1) {
+							Toast.makeText(SplashActivity.this, "下载失败",
+									Toast.LENGTH_LONG).show();
+						}
 
-			});
+					});
 		} else {
-			Toast.makeText(SplashActivity.this, "没有sd", Toast.LENGTH_LONG).show();
+			Toast.makeText(SplashActivity.this, "没有sd", Toast.LENGTH_LONG)
+					.show();
 		}
 
 	}
