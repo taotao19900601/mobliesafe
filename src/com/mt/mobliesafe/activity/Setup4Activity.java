@@ -18,14 +18,43 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 
 public class Setup4Activity extends BaseSetupActivity {
 	
+
+	private CheckBox cbProtect;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_setup4);
+		cbProtect = (CheckBox) findViewById(R.id.cb_protect);
+		boolean protect = mSp.getBoolean("protect", false);
+		if(protect){
+			cbProtect.setText("防盗功能已经配置成功！");
+			cbProtect.setChecked(true);
+		}else{
+			cbProtect.setText("防盗功能未开启！");
+			cbProtect.setChecked(false);
+		}
+		
+		cbProtect.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				if(isChecked){
+					cbProtect.setText("防盗功能已经配置成功！");
+					mSp.edit().putBoolean("protect", true).commit();
+				}else{
+					cbProtect.setText("防盗功能未开启！");
+					mSp.edit().putBoolean("protect", false).commit();
+
+				}
+			}
+		});
 
 	}
 
@@ -52,6 +81,6 @@ public class Setup4Activity extends BaseSetupActivity {
 
 	@Override
 	public void showNextPage() {
-
+		
 	}
 }

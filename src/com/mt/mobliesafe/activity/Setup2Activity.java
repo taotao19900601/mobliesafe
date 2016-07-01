@@ -12,6 +12,7 @@ package com.mt.mobliesafe.activity;
  * 
  */
 import com.mt.mobliesafe.R;
+import com.mt.mobliesafe.utils.ToastUtils;
 import com.mt.mobliesafe.view.SettingItemView;
 
 import android.app.Activity;
@@ -82,6 +83,11 @@ public class Setup2Activity extends BaseSetupActivity {
 
 	@Override
 	public void showNextPage() {
+		String sim = mSp.getString("sim","");
+		if(TextUtils.isEmpty(sim)){
+			ToastUtils.showToast(this, "sim卡没有绑定");
+			return;
+		}
 		Intent intent = new Intent(this, Setup3Activity.class);
 		startActivity(intent);
 		finish();

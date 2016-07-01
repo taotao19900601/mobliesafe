@@ -12,10 +12,12 @@ package com.mt.mobliesafe.activity;
  * 
  */
 import com.mt.mobliesafe.R;
+import com.mt.mobliesafe.utils.ToastUtils;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -28,6 +30,8 @@ public class Setup3Activity extends BaseSetupActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_setup3);
 		etPhone = (EditText) findViewById(R.id.et_phone);
+		String phone = mSp.getString("safe_phone", "");
+		etPhone.setText(phone);
 	}
 
 	@Override
@@ -41,10 +45,17 @@ public class Setup3Activity extends BaseSetupActivity {
 
 	@Override
 	public void showNextPage() {
+		String safephone = etPhone.getText().toString().trim();
+		Log.i("TAG", "Text:"+safephone);
+		if(TextUtils.isEmpty(safephone)){
+			ToastUtils.showToast(this, "电话号码不能为空");
+			return;
+		}
+		mSp.edit().putString("safe_phone", safephone).commit();
 		Intent intent = new Intent(this, Setup4Activity.class);
 		startActivity(intent);
-		finish();
 		overridePendingTransition(R.anim.tran_in, R.anim.tran_out);
+		finish();
 	}
 
 	public void selectContast(View view) {
@@ -55,17 +66,17 @@ public class Setup3Activity extends BaseSetupActivity {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		//Activity.RESULT_OK -1
-		//Activity.RESULT_CANCELED 0
-		//Activity.RESULT_FIRST_USER 1
-		// 如果不加判断话  可能会出现 nullpaintexception  
-		// resultCode 如果为0的话  返回取消  intent data 值为 null
-		
-		if(resultCode==Activity.RESULT_OK){
+		// Activity.RESULT_OK -1
+		// Activity.RESULT_CANCELED 0
+		// Activity.RESULT_FIRST_USER 1
+		// 如果不加判断话 可能会出现 nullpaintexception
+		// resultCode 如果为0的话 返回取消 intent data 值为 null
+
+		if (resultCode == Activity.RESULT_OK) {
 			String phone = data.getStringExtra("phone");
 			phone = phone.replaceAll("-", "").replaceAll(" ", "");
 			etPhone.setText(phone);
 		}
-	
+
 	}
 }

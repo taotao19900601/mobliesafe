@@ -9,13 +9,12 @@
         style="@style/TitleStyle"
         android:text="4.恭喜你设置完成" />
 
-  <CheckBox 
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-     	android:text="防盗保护没有开启"
-      />
-   
-    
+    <CheckBox
+        android:id="@+id/cb_protect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="防盗保护没有开启" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -53,12 +52,12 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:src="@drawable/phone" />
-		<Button 
-		    android:text="上一步"
-		    android:background="@drawable/btn_green_selector"
-		    style="@style/PreviousStyle"
-		    />
-        
+
+        <Button
+            style="@style/PreviousStyle"
+            android:background="@drawable/btn_green_selector"
+            android:text="上一步" />
+
         <Button
             style="@style/NextStyle"
             android:background="@drawable/btn_green_selector"

@@ -22,7 +22,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="请输入或选择安全号码"
-        android:text="发送报警短信 " />
+        android:inputType="phone"
+         />
 
     <Button
         android:onClick="selectContast"
