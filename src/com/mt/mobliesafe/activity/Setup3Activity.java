@@ -16,6 +16,7 @@ import com.mt.mobliesafe.R;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
@@ -54,8 +55,17 @@ public class Setup3Activity extends BaseSetupActivity {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		String phone = data.getStringExtra("phone");
-		phone = phone.replaceAll("-", "").replaceAll(" ", "");
-		etPhone.setText(phone);
+		//Activity.RESULT_OK -1
+		//Activity.RESULT_CANCELED 0
+		//Activity.RESULT_FIRST_USER 1
+		// 如果不加判断话  可能会出现 nullpaintexception  
+		// resultCode 如果为0的话  返回取消  intent data 值为 null
+		
+		if(resultCode==Activity.RESULT_OK){
+			String phone = data.getStringExtra("phone");
+			phone = phone.replaceAll("-", "").replaceAll(" ", "");
+			etPhone.setText(phone);
+		}
+	
 	}
 }

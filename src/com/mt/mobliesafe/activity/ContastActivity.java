@@ -40,7 +40,7 @@ public class ContastActivity extends Activity{
 				String phone = readContact.get(position).get("phone"); 
 				Intent data = new Intent();
 				data.putExtra("phone", phone);
-				setResult(0, data);
+				setResult(-1, data);
 				finish();
 			}
 		});
