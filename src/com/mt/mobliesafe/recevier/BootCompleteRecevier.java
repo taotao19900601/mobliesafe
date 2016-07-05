@@ -1,9 +1,11 @@
 package com.mt.mobliesafe.recevier;
 
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.telephony.SmsManager;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.Log;
@@ -36,6 +38,11 @@ public class BootCompleteRecevier extends BroadcastReceiver {
 				} else {
 					// sim卡不安全
 					Log.i("TAG", "sim not safe");
+					String safephone = mSp.getString("safe_phone", "");
+					SmsManager smManager = SmsManager.getDefault(); 
+					smManager.sendTextMessage(safephone, null, "sim card changed", null, null);
+						
+					
 				}
 			}
 		}
