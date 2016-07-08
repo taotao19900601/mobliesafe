@@ -54,7 +54,9 @@
         </activity>
         <activity android:name="com.mt.mobliesafe.activity.ContastActivity" >
         </activity>
-
+		<activity android:name="com.mt.mobliesafe.activity.AToolsActivity" ></activity>
+        
+		<activity android:name="com.mt.mobliesafe.activity.AddressActivity"></activity>
         <receiver android:name="com.mt.mobliesafe.recevier.BootCompleteRecevier" >
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />

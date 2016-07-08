@@ -1,6 +1,8 @@
 package com.mt.mobliesafe.activity;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -27,6 +29,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.content.res.AssetManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -64,8 +67,8 @@ public class SplashActivity extends Activity {
 			switch (msg.what) {
 
 			case CODE_UPDATE_DIALOG:
-				Toast.makeText(SplashActivity.this, "新版本更新",
-						Toast.LENGTH_LONG).show();
+				Toast.makeText(SplashActivity.this, "新版本更新", Toast.LENGTH_LONG)
+						.show();
 				showUpdateDailog();
 
 				break;
@@ -111,6 +114,8 @@ public class SplashActivity extends Activity {
 
 		mSp = getSharedPreferences("config", MODE_PRIVATE);
 		boolean autoUpdate = mSp.getBoolean("auto_update", true);
+
+		copyDB("address.db"); // 拷贝数据库
 
 		if (autoUpdate) { // 从sp文件中获取 auto_update 的值 默认为true,否则 进入home主页
 			checkVersion(); // 检查版本
@@ -324,6 +329,40 @@ public class SplashActivity extends Activity {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
+
+	}
+
+	// 拷贝数据库
+	public void copyDB(String dbName) {
+		File file = new File(getFilesDir(), dbName);
+		// Log.i("TAG", "路径：" + file.getAbsolutePath());
+
+		if(file.exists()){
+			return;
+		}
+		InputStream is = null;
+		FileOutputStream fileOutputStream = null;
+
+		AssetManager assets = getAssets();
+		try {
+			is = assets.open(dbName);
+			fileOutputStream = new FileOutputStream(file);
+			int len = 0;
+			byte[] buffer = new byte[1024];
+			while ((len = is.read(buffer)) != -1) {
+				fileOutputStream.write(buffer, 0, len);
+				fileOutputStream.flush();
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				fileOutputStream.close();
+				is.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 
 	}
 }
