@@ -9,12 +9,14 @@ public class AddressDao {
 	private static SQLiteDatabase database;
 
 	public static String getAddress(String number) {
+		// 在assets文件夹中有该数据库 必须将该数据库复制到data/data/ xxxxx.xxx.xx/files/address.db 
+		// 在splash页面的初始化时 copy database
 		String path = "data/data/com.mt.mobliesafe/files/address.db";
 		database = SQLiteDatabase.openDatabase(path, null,
 				SQLiteDatabase.OPEN_READONLY);
 		// 匹配手机号码
 		if (number.matches("^1[3-8]\\d{9}$")) {
-			
+
 			Cursor cursor = database
 					.rawQuery(
 							"select location from data2 where id=(select outkey from data1 where id=?)",
