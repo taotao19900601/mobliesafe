@@ -34,6 +34,7 @@ public class SettingItemView extends LinearLayout {
 		mDesc_on = attrs.getAttributeValue(NAMESPACE, "desc_on");
 		mDesc_off = attrs.getAttributeValue(NAMESPACE, "desc_off");
 		initView();
+		
 		// int attributeCount = attrs.getAttributeCount();
 		// for(int i = 0 ; i<attributeCount;i++){
 		// String attributeName = attrs.getAttributeName(i);
