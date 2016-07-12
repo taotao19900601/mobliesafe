@@ -86,6 +86,8 @@
         </receiver>
         <service android:name="com.mt.mobliesafe.service.LocationService" >
         </service>
+        
+        <service android:name="com.mt.mobliesafe.service.AddressService"></service>
     </application>
 
 </manifest>
