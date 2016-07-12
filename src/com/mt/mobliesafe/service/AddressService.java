@@ -15,6 +15,7 @@ import android.widget.Toast;
 public class AddressService extends Service {
 
 	private TelephonyManager tm;
+	private MyListener listener;
 
 	@Override
 	public IBinder onBind(Intent intent) {
@@ -25,13 +26,14 @@ public class AddressService extends Service {
 	public void onCreate() {
 		super.onCreate();
 		tm = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
-		MyListener listener = new MyListener();
+		listener = new MyListener();
 		tm.listen(listener, PhoneStateListener.LISTEN_CALL_STATE); // 监听打电话的状态
 	}
 
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
+		tm.listen(listener, PhoneStateListener.LISTEN_NONE); // 停止来电监听
 	}
 	
 	class MyListener extends PhoneStateListener{

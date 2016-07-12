@@ -2,6 +2,7 @@ package com.mt.mobliesafe.activity;
 
 import com.mt.mobliesafe.R;
 import com.mt.mobliesafe.service.AddressService;
+import com.mt.mobliesafe.utils.ServiceStatusUtils;
 import com.mt.mobliesafe.view.SettingItemView;
 
 import android.app.Activity;
@@ -27,6 +28,14 @@ public class SettingActivity extends Activity {
 	
 	public void initAddressView(){
 		sivAddress = (SettingItemView) findViewById(R.id.siv_address);
+		// 判断当前addressservice 是否运行
+		boolean serviceRunning = ServiceStatusUtils.isServiceRunning(this,"com.mt.mobliesafe.service.AddressService");
+		if(serviceRunning){
+			sivAddress.setChecked(true);
+		}else{
+			sivAddress.setChecked(false);
+		}
+		
 		sivAddress.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -40,6 +49,7 @@ public class SettingActivity extends Activity {
 				}
 			}
 		});
+		
 	}
 	
 	public void initUpdateView(){
