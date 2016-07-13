@@ -1,25 +1,27 @@
 package com.mt.mobliesafe.service;
 
-import com.mt.mobliesafe.utils.ToastUtils;
-import com.mt.mobliesate.db.dao.AddressDao;
-
 import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
+import android.graphics.PixelFormat;
 import android.os.IBinder;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
-import android.text.style.SuperscriptSpan;
-import android.util.Log;
-import android.widget.Toast;
+import android.view.WindowManager;
+import android.widget.TextView;
+
+import com.mt.mobliesate.db.dao.AddressDao;
 
 public class AddressService extends Service {
 
 	private TelephonyManager tm;
 	private MyListener listener;
 	private OutCallRecevier recevier;
+	private WindowManager mWM;
+	private TextView view;
 
 	@Override
 	public IBinder onBind(Intent intent) {
@@ -47,32 +49,60 @@ public class AddressService extends Service {
 		unregisterReceiver(recevier);
 	}
 
-	// 定义来电广播接受器 监听
+	// 定义去电 广播监听
 	class OutCallRecevier extends BroadcastReceiver {
 
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			String resultData = getResultData();
 			String address = AddressDao.getAddress(resultData);
-			ToastUtils.showToast(context, address);
+			showToast(address);
 		}
 
 	}
-
+	// 监听来电
 	class MyListener extends PhoneStateListener {
 		@Override
-		public void onCallStateChanged(int state, String incomingNumber) {
-			super.onCallStateChanged(state, incomingNumber);
+		public void onCallStateChanged(int state, String incomingNumber) { 
 			switch (state) {
-			case TelephonyManager.CALL_STATE_RINGING:
-				Log.i("TAG", "电话铃声响了");
-				String address = AddressDao.getAddress(incomingNumber); // 根据来电号码查询归属地
-				ToastUtils.showToast(AddressService.this, address);
+			case TelephonyManager.CALL_STATE_RINGING: // 电话铃声响了
+				String address = AddressDao.getAddress(incomingNumber);
+				showToast(address);
+				break;
+			case TelephonyManager.CALL_STATE_IDLE:
+				if(mWM!=null){
+					mWM.removeView(view); // 移除界面
+					view = null;
+				}
 				break;
 			default:
 				break;
 			}
 		}
+	}
+	/**
+	 * 自定义归属地浮窗
+	 */
+	public void showToast(String text){
+		
+		
+		mWM = (WindowManager) this.getSystemService(Context.WINDOW_SERVICE);
+
+		WindowManager.LayoutParams params = new WindowManager.LayoutParams();
+		params.height = WindowManager.LayoutParams.WRAP_CONTENT;
+		params.width = WindowManager.LayoutParams.WRAP_CONTENT;
+		params.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
+				| WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
+				| WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON;
+		params.format = PixelFormat.TRANSLUCENT;
+		params.type = WindowManager.LayoutParams.TYPE_TOAST;
+		params.setTitle("Toast");
+
+		view = new TextView(this);
+		view.setText(text);
+		view.setTextColor(Color.RED);
+		view.setTextSize(20.0f);
+		mWM.addView(view, params);// 将view添加在屏幕上(Window)
 	}
 
 }
