@@ -5,14 +5,17 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.PixelFormat;
 import android.os.IBinder;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
 
+import com.mt.mobliesafe.R;
 import com.mt.mobliesate.db.dao.AddressDao;
 
 public class AddressService extends Service {
@@ -21,7 +24,8 @@ public class AddressService extends Service {
 	private MyListener listener;
 	private OutCallRecevier recevier;
 	private WindowManager mWM;
-	private TextView view;
+	private View view;
+	private SharedPreferences mPref;
 
 	@Override
 	public IBinder onBind(Intent intent) {
@@ -31,6 +35,7 @@ public class AddressService extends Service {
 	@Override
 	public void onCreate() {
 		super.onCreate();
+		mPref = getSharedPreferences("config", MODE_PRIVATE);
 		tm = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
 		listener = new MyListener();
 		tm.listen(listener, PhoneStateListener.LISTEN_CALL_STATE); // 监听打电话的状态
@@ -56,7 +61,7 @@ public class AddressService extends Service {
 		public void onReceive(Context context, Intent intent) {
 			String resultData = getResultData();
 			String address = AddressDao.getAddress(resultData);
-			showToast(address);
+			setCustomToast(address);
 		}
 
 	}
@@ -67,7 +72,7 @@ public class AddressService extends Service {
 			switch (state) {
 			case TelephonyManager.CALL_STATE_RINGING: // 电话铃声响了
 				String address = AddressDao.getAddress(incomingNumber);
-				showToast(address);
+				setCustomToast(address);
 				break;
 			case TelephonyManager.CALL_STATE_IDLE:
 				if(mWM!=null){
@@ -83,11 +88,11 @@ public class AddressService extends Service {
 	/**
 	 * 自定义归属地浮窗
 	 */
-	public void showToast(String text){
+	public void setCustomToast(String text){
 		
 		
 		mWM = (WindowManager) this.getSystemService(Context.WINDOW_SERVICE);
-
+		
 		WindowManager.LayoutParams params = new WindowManager.LayoutParams();
 		params.height = WindowManager.LayoutParams.WRAP_CONTENT;
 		params.width = WindowManager.LayoutParams.WRAP_CONTENT;
@@ -97,11 +102,14 @@ public class AddressService extends Service {
 		params.format = PixelFormat.TRANSLUCENT;
 		params.type = WindowManager.LayoutParams.TYPE_TOAST;
 		params.setTitle("Toast");
-
-		view = new TextView(this);
-		view.setText(text);
-		view.setTextColor(Color.RED);
-		view.setTextSize(20.0f);
+		view = View.inflate(this, R.layout.toast_address, null);
+		int style = mPref.getInt("addressstyle", 0);
+		int bgId[]={R.drawable.call_locate_white,R.drawable.call_locate_orange,R.drawable.call_locate_blue,R.drawable.call_locate_gray,R.drawable.call_locate_green};
+		view.setBackgroundResource(bgId[style]);
+		TextView  textView = (TextView) view.findViewById(R.id.tv_address);
+		textView.setText(text);
+		textView.setTextColor(Color.RED);
+		textView.setTextSize(20.0f);
 		mWM.addView(view, params);// 将view添加在屏幕上(Window)
 	}
 

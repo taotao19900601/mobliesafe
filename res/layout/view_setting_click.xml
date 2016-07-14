@@ -19,20 +19,21 @@
         android:textColor="#5000"
         android:textSize="18sp" />
 
+       <ImageView
+        android:id="@+id/iv_click"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/jiantou1_pressed"
+       />
+    
     <View
         android:layout_width="match_parent"
         android:layout_height="0.2dp"
         android:layout_alignParentBottom="true"
         android:background="#5000" />
 
-    <CheckBox
-        android:id="@+id/cb_status"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:clickable="false"
-        android:focusable="false"
-        android:focusableInTouchMode="false" />
+ 
 
 </RelativeLayout>
