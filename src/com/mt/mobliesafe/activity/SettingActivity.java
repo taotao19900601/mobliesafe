@@ -17,7 +17,8 @@ import com.mt.mobliesafe.view.SettingItemView;
 
 public class SettingActivity extends Activity {
 	private SettingItemView sivUpdate; //设置升级
-	private SettingItemView sivAddress;
+	private SettingItemView sivAddress; // 
+	private SettingItemView scvAddressLocation;
 	private SharedPreferences mPref;
 	private SettingClickView scvStyle;
 
@@ -29,6 +30,7 @@ public class SettingActivity extends Activity {
 		initUpdateView();
 		initAddressView();
 		initAddressStyle();
+		initAddressLocation();
 	}
 	
 	public void initAddressView(){
@@ -132,4 +134,19 @@ public class SettingActivity extends Activity {
 		builder.show();
 		
 	}
+	
+	public void initAddressLocation(){
+		scvAddressLocation = (SettingItemView) findViewById(R.id.scv_address_location);
+		scvAddressLocation.setTitle("归属地提示框显示位置");
+		scvAddressLocation.setDesc("设置归属地提示框显示位置");
+		
+		scvAddressLocation.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				startActivity(new Intent(SettingActivity.this, DragViewActivity.class));
+			}
+		});
+	}
+	
 }
